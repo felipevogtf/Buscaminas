@@ -107,6 +107,10 @@
     }
   }
 
+  .celda:hover{
+    cursor: pointer;
+  }
+
   .minas-adyacentes[cantidad] {
     color: black;
   }
@@ -136,35 +140,12 @@
   }
 }
 
-.tablero > .celda {
-  flex: 1 1 200px;
-}
-
 .celda-mina {
   background-color: #f25c54b6;
   animation: pop 0.3s linear 1;
 
   span {
     color: #2e2f31d5;
-  }
-}
-
-@media screen and (max-width: 1600px) {
-  .tablero,
-  .tablero-header {
-    width: 50%;
-  }
-}
-@media screen and (max-width: 1200px) {
-  .tablero,
-  .tablero-header {
-    width: 60%;
-  }
-}
-@media screen and (max-width: 768px) {
-  .tablero,
-  .tablero-header {
-    width: 90%;
   }
 }
 
