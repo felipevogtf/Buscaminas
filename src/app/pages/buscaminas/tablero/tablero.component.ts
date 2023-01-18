@@ -298,7 +298,7 @@ export class TableroComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((data: NivelTipo) => {
-        if (data) {
+        if (Object.values(NivelTipo).includes(data)) {
           this.nivelSeleccionado = data;
           this.reiniciar();
         }
