@@ -43,15 +43,15 @@ export class TableroComponent implements OnInit {
 
   iniciarSFX() {
     this.bubbleSFX = new Audio();
-    this.bubbleSFX.src = '/assets/sfx/bubble.mp3';
+    this.bubbleSFX.src = 'assets/sfx/bubble.mp3';
     this.bubbleSFX.load();
 
     this.explosionSFX = new Audio();
-    this.explosionSFX.src = '/assets/sfx/explosion.mp3';
+    this.explosionSFX.src = 'assets/sfx/explosion.mp3';
     this.explosionSFX.load();
 
     this.winSFX = new Audio();
-    this.winSFX.src = '/assets/sfx/win.mp3';
+    this.winSFX.src = 'assets/sfx/win.mp3';
     this.winSFX.load();
   }
 
