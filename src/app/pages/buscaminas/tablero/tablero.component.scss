@@ -15,7 +15,7 @@
   margin: auto;
   padding-bottom: 20px;
   padding-top: 20px;
-  
+
   .contadores {
     display: flex;
     flex-direction: row;
@@ -60,7 +60,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
     gap: 20px;
 
     .boton-simple {
