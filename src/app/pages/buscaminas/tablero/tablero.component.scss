@@ -1,0 +1,153 @@
+.full-screen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f8f8;
+}
+
+.tablero-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+
+  .contador-minas {
+    font-weight: bold;
+    font-size: 30px;
+    color: #2e2f31;
+  }
+
+  .boton-emote {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    font-size: 30px;
+    color: #fdc43f;
+    margin-left: 10px;
+  }
+
+  .boton-emote:hover {
+    cursor: pointer;
+    animation: pulse-yellow 2s infinite;
+  }
+}
+
+.tablero {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .fila {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .celda {
+    height: 3vw;
+    width: 3vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5vw;
+    transition: background-color 0.5s;
+
+    span {
+      font-weight: bold;
+      font-size: 30px;
+    }
+  }
+
+  .minas-adyacentes[cantidad] {
+    color: black;
+  }
+  .minas-adyacentes[cantidad="1"] {
+    color: #0f80aa;
+  }
+  .minas-adyacentes[cantidad="2"] {
+    color: #538d22;
+  }
+  .minas-adyacentes[cantidad="3"] {
+    color: #ff5a5f;
+  }
+  .minas-adyacentes[cantidad="4"] {
+    color: #1d4e89;
+  }
+  .minas-adyacentes[cantidad="5"] {
+    color: #ad2e24;
+  }
+  .minas-adyacentes[cantidad="6"] {
+    color: #339989;
+  }
+  .minas-adyacentes[cantidad="7"] {
+    color: #46494c;
+  }
+  .minas-adyacentes[cantidad="8"] {
+    color: #7d7d88;
+  }
+}
+
+.celda-mina {
+  background-color: #f25c54b6;
+  animation: pop 0.3s linear 1;
+
+  span {
+    color: #2e2f31d5;
+  }
+}
+
+.celda-reventada {
+  background-color: #f25c54;
+  animation: pulse 1s ease-in infinite;
+
+  span {
+    color: #2e2f31;
+  }
+}
+
+.celda-normal {
+  background-color: #dcdcdc;
+}
+.celda-normal:hover {
+  background-color: #d3d3d3;
+  transform: scale(1.1);
+}
+
+.celda-visible {
+  background-color: #ffd99b;
+  animation: pop 0.3s linear 1;
+}
+
+@keyframes pop {
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes pulse {
+  25% {
+    transform: scale(0.9);
+  }
+  75% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulse-yellow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 177, 66, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 177, 66, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 177, 66, 0);
+  }
+}

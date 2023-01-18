@@ -1,0 +1,40 @@
+<div class="full-screen">
+  <div class="tablero-header">
+    <div class="contador-minas">
+      <i class="fa-solid fa-bomb"></i><span> {{ tablero.cantidadMinas }}</span>
+    </div>
+
+    <div class="boton-emote" (click)="reiniciar()">
+      <i class="fa-solid" [ngClass]="obtenerEmote()"></i>
+    </div>
+  </div>
+  <div class="tablero" *ngIf="tablero">
+    <div class="fila" *ngFor="let fila of tablero.matriz">
+      <div
+        class="celda"
+        [ngClass]="obtenerClaseCelda(celda)"
+        *ngFor="let celda of fila"
+        (click)="revelarCelda(celda)"
+      >
+        <div [hidden]="celda.estado === EstadoCelda.Oculta">
+          <span
+            class="minas-adyacentes"
+            *ngIf="!celda.esMina && celda.minasAdyacentes > 0"
+            [attr.cantidad]="celda.minasAdyacentes"
+          >
+            {{ celda.minasAdyacentes }}
+          </span>
+
+          <span class="mina" *ngIf="celda.esMina">
+            <i
+              class="fa-solid"
+              [ngClass]="
+                celda.estado === EstadoCelda.Reventada ? 'fa-burst' : 'fa-bomb'
+              "
+            ></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
