@@ -65,7 +65,6 @@ export class TableroComponent implements OnInit {
 
   ngOnInit() {
     this.observarEstadoTablero();
-    this.backgroundSFX.play();
   }
 
   /**
@@ -111,6 +110,10 @@ export class TableroComponent implements OnInit {
    */
   reiniciar(): void {
     this.crearTablero();
+
+    if (this.backgroundSFX.paused) {
+      this.backgroundSFX.play();
+    }
   }
 
   /**
@@ -169,6 +172,10 @@ export class TableroComponent implements OnInit {
         this.tablero.revelarCelda(celda);
       }
     }
+
+    if (this.backgroundSFX.paused) {
+      this.backgroundSFX.play();
+    }
   }
 
   /**
@@ -182,6 +189,10 @@ export class TableroComponent implements OnInit {
       } else if (celda.estado === EstadoCelda.Marcada) {
         this.tablero.desmarcarCelda(celda);
       }
+    }
+
+    if (this.backgroundSFX.paused) {
+      this.backgroundSFX.play();
     }
   }
 
