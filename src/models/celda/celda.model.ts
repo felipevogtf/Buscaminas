@@ -22,14 +22,24 @@ export class Celda {
   }
 
   revelar(): void {
-    if (this.estado == EstadoCelda.Oculta) {
+    if(this.estado === EstadoCelda.Oculta){
       this.estado = EstadoCelda.Visible;
     }
   }
 
   marcar(): void {
-    if (this.estado == EstadoCelda.Oculta) {
-      this.estado = EstadoCelda.Marcada;
-    }
+    this.estado = EstadoCelda.Marcada;
+  }
+
+  desmarcar(): void {
+    this.estado = EstadoCelda.Oculta;
+  }
+
+  explotar(){
+    this.estado = EstadoCelda.Reventada;
+  }
+
+  revelarMinaMarcada(){
+    this.estado = EstadoCelda.MarcadaReventada;
   }
 }

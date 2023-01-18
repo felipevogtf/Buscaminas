@@ -7,19 +7,28 @@ export class Tablero {
   filas: number;
   columnas: number;
   cantidadMinas: number;
+  cantidadBanderas: number;
   matriz: Celda[][];
   minas: Celda[];
 
   estadoTablero: Subject<EstadoTablero>;
   celdasReveladas: number;
+  celdasMarcadas: number;
 
-  constructor(filas: number, columnas: number, cantidadMinas: number) {
+  constructor(
+    filas: number,
+    columnas: number,
+    cantidadMinas: number,
+    cantidadBanderas: number
+  ) {
     this.filas = filas;
     this.columnas = columnas;
     this.cantidadMinas = cantidadMinas;
+    this.cantidadBanderas = cantidadBanderas;
     this.matriz = [];
     this.minas = [];
     this.celdasReveladas = 0;
+    this.celdasMarcadas = 0;
     this.estadoTablero = new Subject<EstadoTablero>();
 
     this.construirTablero();
@@ -27,6 +36,9 @@ export class Tablero {
     this.calcularMinasAdyacentes();
   }
 
+  /**
+   * Construir una matriz de celdas
+   */
   construirTablero(): void {
     for (let i = 0; i < this.filas; i++) {
       let fila: Celda[] = [];
@@ -38,6 +50,10 @@ export class Tablero {
     }
   }
 
+  /**
+   * Crear un array de posiciones para las minas, asignar minas
+   * y obtener un array con las celdas de las minas
+   */
   distribuirMinas(): void {
     let posicionMinas: number[][] = [];
 
@@ -58,6 +74,9 @@ export class Tablero {
     }
   }
 
+  /**
+   * Calcula la cantidad de minas alrededor de una celda
+   */
   calcularMinasAdyacentes(): void {
     for (let i = 0; i < this.matriz.length; i++) {
       for (let j = 0; j < this.matriz[i].length; j++) {
@@ -74,6 +93,11 @@ export class Tablero {
     }
   }
 
+  /**
+   * Obtener celdas adyacentes (8 celdas maximo)
+   * @param celda 
+   * @returns array con celdas adyacentes
+   */
   obtenerCeldasAdyacentes(celda: Celda): Celda[] {
     let celdas: Celda[] = [];
     for (let i = 0; i < 8; i++) {
@@ -119,6 +143,13 @@ export class Tablero {
     return celdas;
   }
 
+  /**
+   * Revelar contenido de una celda
+   * - Si es mina, se termina la partida y se revelan todas las minas
+   * - Si no es mina y no hay minas alrededor, se revela la celda y se recurre a la misma funcion con las celdas adyacentes
+   * - Si no es mina y tiene minas alrededor, solo se revela la celda
+   * @param celda 
+   */
   revelarCelda(celda: Celda): void {
     if (celda.estado == EstadoCelda.Oculta) {
       this.celdasReveladas++;
@@ -127,7 +158,7 @@ export class Tablero {
     celda.revelar();
 
     if (celda.esMina) {
-      celda.estado = EstadoCelda.Reventada;
+      celda.explotar();
       this.revelarMinas();
       this.estadoTablero.next(EstadoTablero.Perdido);
     }
@@ -151,9 +182,48 @@ export class Tablero {
     }
   }
 
+  /**
+   * Revela todas las minas del tablero
+   */
   revelarMinas(): void {
     for (const mina of this.minas) {
-      mina.revelar();
+      if (mina.estado === EstadoCelda.Marcada) {
+        mina.revelarMinaMarcada();
+      } else {
+        mina.revelar();
+      }
     }
+  }
+
+  /**
+   * Marca una celda
+   * @param celda 
+   */
+  marcarCelda(celda: Celda): void {
+    if (celda.estado == EstadoCelda.Oculta) {
+      this.celdasMarcadas++;
+    }
+
+    celda.marcar();
+  }
+
+  /**
+   * Desmarca una celda
+   * @param celda 
+   */
+  desmarcarCelda(celda: Celda): void {
+    if (celda.estado == EstadoCelda.Marcada) {
+      this.celdasMarcadas--;
+    }
+
+    celda.desmarcar();
+  }
+
+  /**
+   * Obtiene el total de banderas restantes
+   * @returns 
+   */
+  obtenerBanderasRestantes(): number {
+    return this.cantidadBanderas - this.celdasMarcadas;
   }
 }

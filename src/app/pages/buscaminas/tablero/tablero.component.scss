@@ -11,28 +11,70 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 10px;
-
-  .contador-minas {
-    font-weight: bold;
-    font-size: 30px;
-    color: #2e2f31;
-  }
-
-  .boton-emote {
+  width: 60%;
+  margin: auto;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  
+  .contadores {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
+    gap: 20px;
+    width: 33.3%;
 
-    border-radius: 50%;
-    font-size: 30px;
-    color: #fdc43f;
-    margin-left: 10px;
+    .contador {
+      font-weight: bold;
+      font-size: x-large;
+      color: #38393b;
+      display: flex;
+      align-items: center;
+
+      i {
+        font-size: xx-large;
+        margin-right: 5px;
+      }
+    }
   }
 
-  .boton-emote:hover {
-    cursor: pointer;
-    animation: pulse-yellow 2s infinite;
+  .botonera {
+    padding-right: 16%;
+    padding-left: 16%;
+    .boton-emote {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+      font-size: xxx-large;
+      color: #fdc43f;
+    }
+    .boton-emote:hover {
+      cursor: pointer;
+      animation: pulse-yellow 2s infinite;
+    }
+  }
+
+  .opciones {
+    width: 33.3%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    gap: 20px;
+
+    .boton-simple {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+      font-size: x-large;
+      color: #38393b;
+    }
+    .boton-simple:hover {
+      cursor: pointer;
+    }
   }
 }
 
@@ -40,7 +82,8 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-
+  align-items: center;
+  
   .fila {
     display: flex;
     flex-direction: row;
@@ -48,8 +91,8 @@
   }
 
   .celda {
-    height: 3vw;
-    width: 3vw;
+    height: 50px;
+    width: 50px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -58,8 +101,9 @@
     transition: background-color 0.5s;
 
     span {
+      position: relative;
       font-weight: bold;
-      font-size: 30px;
+      font-size: x-large;
     }
   }
 
@@ -92,12 +136,44 @@
   }
 }
 
+.tablero > .celda {
+  flex: 1 1 200px;
+}
+
 .celda-mina {
   background-color: #f25c54b6;
   animation: pop 0.3s linear 1;
 
   span {
     color: #2e2f31d5;
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .tablero,
+  .tablero-header {
+    width: 50%;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .tablero,
+  .tablero-header {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .tablero,
+  .tablero-header {
+    width: 90%;
+  }
+}
+
+.celda-mina-marcada {
+  background-color: #dcdcdc;
+  animation: pop 0.3s linear 1;
+
+  span {
+    color: #f25c54b6;
   }
 }
 

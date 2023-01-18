@@ -1,13 +1,36 @@
-<div class="full-screen">
+<div (contextmenu)="disableClickMenu($event)">
+  <!-- Inicio. Encabezado tablero -->
   <div class="tablero-header">
-    <div class="contador-minas">
-      <i class="fa-solid fa-bomb"></i><span> {{ tablero.cantidadMinas }}</span>
+    <div class="contadores">
+      <div class="contador">
+        <i class="fa-solid fa-bomb"></i
+        ><span> {{ tablero.cantidadMinas }}</span>
+      </div>
+      <div class="contador">
+        <i class="fa-solid fa-flag"></i
+        ><span> {{ tablero.obtenerBanderasRestantes() }}</span>
+      </div>
     </div>
 
-    <div class="boton-emote" (click)="reiniciar()">
-      <i class="fa-solid" [ngClass]="obtenerEmote()"></i>
+    <div class="botonera">
+      <div class="boton-emote" (click)="reiniciar()">
+        <i class="fa-solid" [ngClass]="obtenerEmote()"></i>
+      </div>
+    </div>
+
+    <div class="opciones">
+      <div class="boton-simple" (click)="toggleMuted()">
+        <i class="fa-solid" [ngClass]="audioMuted ? 'fa-volume-xmark' : 'fa-volume-high'"></i>
+      </div>
+
+      <div class="boton-simple" (click)="abrirConfiguracion()">
+        <i class="fa-solid fa-gear"></i>
+      </div>
     </div>
   </div>
+  <!-- Fin. Encabezado tablero -->
+
+  <!-- Inicio. Tablero -->
   <div class="tablero" *ngIf="tablero">
     <div class="fila" *ngFor="let fila of tablero.matriz">
       <div
@@ -15,26 +38,39 @@
         [ngClass]="obtenerClaseCelda(celda)"
         *ngFor="let celda of fila"
         (click)="revelarCelda(celda)"
+        (contextmenu)="marcarCelda(celda)"
       >
         <div [hidden]="celda.estado === EstadoCelda.Oculta">
-          <span
-            class="minas-adyacentes"
-            *ngIf="!celda.esMina && celda.minasAdyacentes > 0"
-            [attr.cantidad]="celda.minasAdyacentes"
-          >
-            {{ celda.minasAdyacentes }}
-          </span>
+          <div [ngSwitch]="celda.estado" *ngIf="!celda.esMina">
+            <span *ngSwitchCase="EstadoCelda.Marcada">
+              <i class="fa-solid fa-flag"></i>
+            </span>
+            <span
+              *ngSwitchDefault
+              class="minas-adyacentes"
+              [attr.cantidad]="celda.minasAdyacentes"
+            >
+              {{ celda.minasAdyacentes > 0 ? celda.minasAdyacentes : "" }}
+            </span>
+          </div>
 
-          <span class="mina" *ngIf="celda.esMina">
-            <i
-              class="fa-solid"
-              [ngClass]="
-                celda.estado === EstadoCelda.Reventada ? 'fa-burst' : 'fa-bomb'
-              "
-            ></i>
-          </span>
+          <div [ngSwitch]="celda.estado" *ngIf="celda.esMina">
+            <span *ngSwitchCase="EstadoCelda.Marcada">
+              <i class="fa-solid fa-flag"></i>
+            </span>
+            <span *ngSwitchCase="EstadoCelda.MarcadaReventada">
+              <i class="fa-solid fa-flag"></i>
+            </span>
+            <span *ngSwitchCase="EstadoCelda.Reventada">
+              <i class="fa-solid fa-burst"></i>
+            </span>
+            <span *ngSwitchDefault>
+              <i class="fa-solid fa-bomb"></i>
+            </span>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <!-- Fin. Tablero -->
 </div>
