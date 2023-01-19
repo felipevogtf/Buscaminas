@@ -4,10 +4,10 @@ import { EstadoCelda } from '../celda/estado-celda.model';
 import { EstadoTablero } from './tablero-estado.model';
 
 export class Tablero {
-  filas: number;
-  columnas: number;
-  cantidadMinas: number;
-  cantidadBanderas: number;
+  filas: number = 10;
+  columnas: number = 10;
+  cantidadMinas: number = 10;
+  cantidadBanderas: number = 10;
   matriz: Celda[][];
   minas: Celda[];
 
@@ -21,10 +21,15 @@ export class Tablero {
     cantidadMinas: number,
     cantidadBanderas: number
   ) {
-    this.filas = filas;
-    this.columnas = columnas;
-    this.cantidadMinas = cantidadMinas;
-    this.cantidadBanderas = cantidadBanderas;
+    if (
+      this.validarPropiedades(filas, columnas, cantidadMinas, cantidadBanderas)
+    ) {
+      this.filas = filas;
+      this.columnas = columnas;
+      this.cantidadMinas = cantidadMinas;
+      this.cantidadBanderas = cantidadBanderas;
+    }
+
     this.matriz = [];
     this.minas = [];
     this.celdasReveladas = 0;
@@ -34,6 +39,35 @@ export class Tablero {
     this.construirTablero();
     this.distribuirMinas();
     this.calcularMinasAdyacentes();
+  }
+
+  /**
+   * Validar propiedades de la clase
+   * @param filas 
+   * @param columnas 
+   * @param cantidadMinas 
+   * @param cantidadBanderas 
+   * @returns 
+   */
+  validarPropiedades(
+    filas: number,
+    columnas: number,
+    cantidadMinas: number,
+    cantidadBanderas: number
+  ): boolean {
+    let esValido = true;
+    
+    if (
+      filas <= 0 ||
+      columnas <= 0 ||
+      cantidadMinas <= 0 ||
+      cantidadBanderas <= 0 ||
+      (cantidadMinas > 0 && cantidadMinas >= filas * columnas)
+    ) {
+      esValido = false;
+    }
+
+    return esValido;
   }
 
   /**

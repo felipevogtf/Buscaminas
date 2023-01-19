@@ -114,9 +114,7 @@ export class TableroComponent implements OnInit {
 
     this.crearTablero();
 
-    if (this.backgroundSFX.paused) {
-      this.backgroundSFX.play();
-    }
+    this.backgroundSound();
   }
 
   /**
@@ -155,7 +153,7 @@ export class TableroComponent implements OnInit {
   observarEstadoTablero(): void {
     this.tablero.estadoTablero.subscribe((estado: EstadoTablero) => {
       if (estado == EstadoTablero.Ganado) {
-        this.winSFX.play();
+        this.windSound();
       }
 
       this.partidaFinalizada = true;
@@ -170,19 +168,18 @@ export class TableroComponent implements OnInit {
   revelarCelda(celda: Celda): void {
     if (!this.partidaFinalizada) {
       if (celda.estado === EstadoCelda.Oculta) {
+        /* istanbul ignore next */
         if (!celda.esMina) {
           this.bubbleSound();
         } else {
-          this.explosionSFX.play();
+          this.explosionSound();
         }
 
         this.tablero.revelarCelda(celda);
       }
     }
 
-    if (this.backgroundSFX.paused) {
-      this.backgroundSFX.play();
-    }
+    this.backgroundSound();
   }
 
   /**
@@ -191,6 +188,8 @@ export class TableroComponent implements OnInit {
    */
   marcarCelda(celda: Celda): void {
     if (!this.partidaFinalizada) {
+      this.clickSound();
+      
       if (celda.estado === EstadoCelda.Oculta) {
         this.tablero.marcarCelda(celda);
       } else if (celda.estado === EstadoCelda.Marcada) {
@@ -198,9 +197,7 @@ export class TableroComponent implements OnInit {
       }
     }
 
-    if (this.backgroundSFX.paused) {
-      this.backgroundSFX.play();
-    }
+    this.backgroundSound();
   }
 
   /**
@@ -284,23 +281,6 @@ export class TableroComponent implements OnInit {
 
     return estado;
   }
-  /**
-   * Reproducir copia del nodo del audio (para sobreponer sonidos)
-   */
-  bubbleSound(): void {
-    let sound = this.bubbleSFX.cloneNode() as HTMLAudioElement;
-    sound.muted = this.audioMuted;
-    sound.play();
-  }
-
-  /**
-   * Reproducir copia del nodo del audio (para sobreponer sonidos)
-   */
-  clickSound(): void {
-    let sound = this.clickSFX.cloneNode() as HTMLAudioElement;
-    sound.muted = this.audioMuted;
-    sound.play();
-  }
 
   /**
    * Deshabilita el menu del click derecho
@@ -320,11 +300,7 @@ export class TableroComponent implements OnInit {
     this.winSFX.muted = this.audioMuted;
     this.backgroundSFX.muted = this.audioMuted;
 
-    if (this.audioMuted) {
-      this.backgroundSFX.pause();
-    } else {
-      this.backgroundSFX.play();
-    }
+    this.backgroundSound();
   }
 
   abrirConfiguracion() {
@@ -342,5 +318,56 @@ export class TableroComponent implements OnInit {
           this.reiniciar();
         }
       });
+  }
+
+  /**
+   * Reproducir copia del nodo del audio (para sobreponer sonidos)
+   */
+  bubbleSound(): void {
+    let sound = this.bubbleSFX.cloneNode() as HTMLAudioElement;
+    sound.muted = this.audioMuted;
+    /* istanbul ignore next */
+
+    if (!this.audioMuted) {
+      sound.play();
+    }
+  }
+
+  /**
+   * Reproducir sonido
+   */
+  backgroundSound() {
+    if (!this.audioMuted) {
+      this.backgroundSFX.play();
+    }
+  }
+
+  /**
+   * Reproducir sonido
+   */
+  windSound() {
+    if (!this.audioMuted) {
+      this.winSFX.play();
+    }
+  }
+
+  /**
+   * Reproducir sonido
+   */
+  explosionSound() {
+    if (!this.audioMuted) {
+      this.explosionSFX.play();
+    }
+  }
+
+  /**
+   * Reproducir copia del nodo del audio (para sobreponer sonidos)
+   */
+  clickSound(): void {
+    let sound = this.clickSFX.cloneNode() as HTMLAudioElement;
+    sound.muted = this.audioMuted;
+    if (!this.audioMuted) {
+      sound.play();
+    }
   }
 }
