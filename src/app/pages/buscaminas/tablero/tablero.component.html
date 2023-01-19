@@ -20,7 +20,10 @@
 
     <div class="opciones">
       <div class="boton-simple" (click)="toggleMuted()">
-        <i class="fa-solid" [ngClass]="audioMuted ? 'fa-volume-xmark' : 'fa-volume-high'"></i>
+        <i
+          class="fa-solid"
+          [ngClass]="audioMuted ? 'fa-volume-xmark' : 'fa-volume-high'"
+        ></i>
       </div>
 
       <div class="boton-simple" (click)="abrirConfiguracion()">
@@ -31,12 +34,12 @@
   <!-- Fin. Encabezado tablero -->
 
   <!-- Inicio. Tablero -->
-  <div class="tablero" *ngIf="tablero">
-    <div class="fila" *ngFor="let fila of tablero.matriz">
+  <div class="contenedor" [attr.dificultad]="nivelSeleccionado">
+    <div class="row" *ngFor="let fila of tablero.matriz">
       <div
-        class="celda"
-        [ngClass]="obtenerClaseCelda(celda)"
+        class="col"
         *ngFor="let celda of fila"
+        [ngClass]="obtenerClaseCelda(celda)"
         (click)="revelarCelda(celda)"
         (contextmenu)="marcarCelda(celda)"
       >
