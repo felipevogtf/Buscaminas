@@ -1,5 +1,6 @@
 # Buscaminas
-[Demonstration](https://felipevogtf.github.io/buscaminas/)
+[DEMO](https://felipevogtf.github.io/buscaminas/)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.1.
 
 ## Development server
