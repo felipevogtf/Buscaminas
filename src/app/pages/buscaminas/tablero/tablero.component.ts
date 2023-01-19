@@ -264,6 +264,10 @@ export class TableroComponent implements OnInit {
     return icono;
   }
 
+  /**
+   * Obtiene la clase para el estado de la partida
+   * @returns 
+   */
   obtenerEstadoPartida(): string {
     let estado = '';
 
@@ -303,6 +307,9 @@ export class TableroComponent implements OnInit {
     this.backgroundSound();
   }
 
+  /**
+   * Abre modal de configuracion
+   */
   abrirConfiguracion() {
     this.clickSound();
 
