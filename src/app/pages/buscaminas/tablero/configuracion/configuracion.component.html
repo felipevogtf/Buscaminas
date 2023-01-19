@@ -1,9 +1,23 @@
-<div mat-dialog-title>Configuraciones</div>
+<div mat-dialog-title>Dificultad</div>
 
 <div mat-dialog-content class="contenido">
   <div class="botonera">
-    <button mat-flat-button (click)="seleccionarNivel(NivelTipo.Facil)">Fácil</button>
-    <button mat-flat-button (click)="seleccionarNivel(NivelTipo.Intermedio)">Intermedio</button>
-    <button mat-flat-button (click)="seleccionarNivel(NivelTipo.Dificil)">Difícil</button>
+    <button mat-button (click)="seleccionarNivel(NivelTipo.Facil)">
+      Fácil
+    </button>
+    <button
+      mat-button
+      color="primary"
+      (click)="seleccionarNivel(NivelTipo.Intermedio)"
+    >
+      Intermedio
+    </button>
+    <button
+      mat-button
+      color="warn"
+      (click)="seleccionarNivel(NivelTipo.Dificil)"
+    >
+      Difícil
+    </button>
   </div>
 </div>

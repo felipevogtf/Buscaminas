@@ -95,7 +95,7 @@ export class Tablero {
 
   /**
    * Obtener celdas adyacentes (8 celdas maximo)
-   * @param celda 
+   * @param celda
    * @returns array con celdas adyacentes
    */
   obtenerCeldasAdyacentes(celda: Celda): Celda[] {
@@ -148,7 +148,7 @@ export class Tablero {
    * - Si es mina, se termina la partida y se revelan todas las minas
    * - Si no es mina y no hay minas alrededor, se revela la celda y se recurre a la misma funcion con las celdas adyacentes
    * - Si no es mina y tiene minas alrededor, solo se revela la celda
-   * @param celda 
+   * @param celda
    */
   revelarCelda(celda: Celda): void {
     if (celda.estado == EstadoCelda.Oculta) {
@@ -178,6 +178,7 @@ export class Tablero {
       this.celdasReveladas ==
       this.filas * this.columnas - this.cantidadMinas
     ) {
+      this.desactivarMinas();
       this.estadoTablero.next(EstadoTablero.Ganado);
     }
   }
@@ -196,8 +197,17 @@ export class Tablero {
   }
 
   /**
+   * Marca todas las minas del tablero
+   */
+  desactivarMinas(): void {
+    for (const mina of this.minas) {
+      mina.desactivarMina();
+    }
+  }
+
+  /**
    * Marca una celda
-   * @param celda 
+   * @param celda
    */
   marcarCelda(celda: Celda): void {
     if (celda.estado == EstadoCelda.Oculta) {
@@ -209,7 +219,7 @@ export class Tablero {
 
   /**
    * Desmarca una celda
-   * @param celda 
+   * @param celda
    */
   desmarcarCelda(celda: Celda): void {
     if (celda.estado == EstadoCelda.Marcada) {
@@ -221,7 +231,7 @@ export class Tablero {
 
   /**
    * Obtiene el total de banderas restantes
-   * @returns 
+   * @returns
    */
   obtenerBanderasRestantes(): number {
     return this.cantidadBanderas - this.celdasMarcadas;

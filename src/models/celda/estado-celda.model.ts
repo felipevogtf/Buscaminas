@@ -3,5 +3,6 @@ export enum EstadoCelda {
   Oculta,
   Marcada,
   Reventada,
-  MarcadaReventada
+  MarcadaReventada,
+  Desactivada
 }

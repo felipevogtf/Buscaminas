@@ -11,28 +11,27 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 60%;
+  width: 100%;
   margin: auto;
-  padding-bottom: 20px;
-  padding-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 
   .contadores {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 20px;
-    width: 33.3%;
+    width: 34%;
+    padding-left: 1vw;
+    gap: 10px;
 
     .contador {
       font-weight: bold;
-      font-size: x-large;
-      color: #38393b;
       display: flex;
       align-items: center;
+      font-size: large;
 
       i {
-        font-size: xx-large;
-        margin-right: 5px;
+        margin-right: 3px;
       }
     }
   }
@@ -40,40 +39,90 @@
   .botonera {
     padding-right: 16%;
     padding-left: 16%;
+
     .boton-emote {
       display: flex;
       align-items: center;
       justify-content: center;
 
       border-radius: 50%;
-      font-size: xxx-large;
       color: #fdc43f;
+      font-size: xx-large;
     }
+
     .boton-emote:hover {
       cursor: pointer;
       animation: pulse-yellow 2s infinite;
     }
+    
+    .partida-ganada {
+      color: #76c893;
+      animation: pulse-green 2s infinite;
+    }
+    
+    .partida-ganada:hover {
+      animation: pulse-green 2s infinite;
+    }
+
+    .partida-perdida {
+      color: #f25c54;
+      animation: pulse-red 2s infinite;
+    }
+
+    .partida-perdida:hover {
+      animation: pulse-red 2s infinite;
+    }
+
+    
   }
 
   .opciones {
-    width: 33.3%;
+    width: 34%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    gap: 20px;
+    gap: 10px;
+    padding-right: 1vw;
 
     .boton-simple {
       display: flex;
       align-items: center;
       justify-content: center;
-
-      border-radius: 50%;
-      font-size: x-large;
       color: #38393b;
+      font-size: large;
     }
+
     .boton-simple:hover {
       cursor: pointer;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .tablero-header {
+    width: 40%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    .contadores {
+      gap: 20px;
+      .contador {
+        font-size: xx-large;
+      }
+    }
+
+    .botonera {
+      .boton-emote {
+        font-size: xxx-large;
+      }
+    }
+
+    .opciones {
+      gap: 20px;
+      .boton-simple {
+        font-size: xx-large;
+      }
     }
   }
 }
@@ -93,6 +142,15 @@
 
   span {
     color: #f25c54b6;
+  }
+}
+
+.celda-mina-desactivada {
+  background-color: #dcdcdc;
+  animation: pop 0.3s linear 1;
+
+  span {
+    color: #76c893;
   }
 }
 
@@ -271,5 +329,33 @@
 
   100% {
     box-shadow: 0 0 0 0 rgba(255, 177, 66, 0);
+  }
+}
+
+@keyframes pulse-green {
+  0% {
+    box-shadow: 0 0 0 0 rgba(118, 200, 147, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(118, 200, 147, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(118, 200, 147, 0);
+  }
+}
+
+@keyframes pulse-red {
+  0% {
+    box-shadow: 0 0 0 0 rgba(242, 92, 84, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(242, 92, 84, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(242, 92, 84, 0);
   }
 }

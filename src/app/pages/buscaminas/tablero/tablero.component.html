@@ -13,7 +13,7 @@
     </div>
 
     <div class="botonera">
-      <div class="boton-emote" (click)="reiniciar()">
+      <div class="boton-emote" (click)="reiniciar()" [ngClass]="obtenerEstadoPartida()">
         <i class="fa-solid" [ngClass]="obtenerEmote()"></i>
       </div>
     </div>
@@ -59,6 +59,9 @@
 
           <div [ngSwitch]="celda.estado" *ngIf="celda.esMina">
             <span *ngSwitchCase="EstadoCelda.Marcada">
+              <i class="fa-solid fa-flag"></i>
+            </span>
+            <span *ngSwitchCase="EstadoCelda.Desactivada">
               <i class="fa-solid fa-flag"></i>
             </span>
             <span *ngSwitchCase="EstadoCelda.MarcadaReventada">

@@ -27,6 +27,7 @@ export class TableroComponent implements OnInit {
   explosionSFX!: HTMLAudioElement;
   winSFX!: HTMLAudioElement;
   backgroundSFX!: HTMLAudioElement;
+  clickSFX!: HTMLAudioElement;
   audioMuted!: boolean;
 
   /** Variables enums */
@@ -109,6 +110,8 @@ export class TableroComponent implements OnInit {
    * Volver a crear el tablero
    */
   reiniciar(): void {
+    this.clickSound();
+
     this.crearTablero();
 
     if (this.backgroundSFX.paused) {
@@ -140,6 +143,10 @@ export class TableroComponent implements OnInit {
     this.backgroundSFX.load();
     this.backgroundSFX.volume = 0.15;
     this.backgroundSFX.loop = true;
+
+    this.clickSFX = new Audio();
+    this.clickSFX.src = 'assets/sfx/click.mp3';
+    this.clickSFX.load();
   }
 
   /**
@@ -218,6 +225,9 @@ export class TableroComponent implements OnInit {
         case EstadoCelda.MarcadaReventada:
           clase = 'celda-mina-marcada';
           break;
+        case EstadoCelda.Desactivada:
+          clase = 'celda-mina-desactivada';
+          break;
         default:
           clase = 'celda-mina';
           break;
@@ -257,11 +267,37 @@ export class TableroComponent implements OnInit {
     return icono;
   }
 
+  obtenerEstadoPartida(): string {
+    let estado = '';
+
+    switch (this.tableroEstado) {
+      case EstadoTablero.Ganado:
+        estado = 'partida-ganada';
+        break;
+      case EstadoTablero.Perdido:
+        estado = 'partida-perdida';
+        break;
+      default:
+        estado = '';
+        break;
+    }
+
+    return estado;
+  }
   /**
    * Reproducir copia del nodo del audio (para sobreponer sonidos)
    */
   bubbleSound(): void {
     let sound = this.bubbleSFX.cloneNode() as HTMLAudioElement;
+    sound.muted = this.audioMuted;
+    sound.play();
+  }
+
+  /**
+   * Reproducir copia del nodo del audio (para sobreponer sonidos)
+   */
+  clickSound(): void {
+    let sound = this.clickSFX.cloneNode() as HTMLAudioElement;
     sound.muted = this.audioMuted;
     sound.play();
   }
@@ -279,6 +315,7 @@ export class TableroComponent implements OnInit {
    */
   toggleMuted() {
     this.audioMuted = !this.audioMuted;
+
     this.explosionSFX.muted = this.audioMuted;
     this.winSFX.muted = this.audioMuted;
     this.backgroundSFX.muted = this.audioMuted;
@@ -291,6 +328,8 @@ export class TableroComponent implements OnInit {
   }
 
   abrirConfiguracion() {
+    this.clickSound();
+
     let dialogRef = this.dialog
       .open(ConfiguracionComponent, {
         height: '400px',

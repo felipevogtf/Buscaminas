@@ -42,4 +42,8 @@ export class Celda {
   revelarMinaMarcada(){
     this.estado = EstadoCelda.MarcadaReventada;
   }
+
+  desactivarMina(){
+    this.estado = EstadoCelda.Desactivada;
+  }
 }
