@@ -43,7 +43,7 @@
         (click)="revelarCelda(celda)"
         (contextmenu)="marcarCelda(celda)"
       >
-        <div [hidden]="celda.estado === EstadoCelda.Oculta">
+        <div *ngIf="celda.estado !== EstadoCelda.Oculta">
           <div [ngSwitch]="celda.estado" *ngIf="!celda.esMina">
             <span *ngSwitchCase="EstadoCelda.Marcada">
               <i class="fa-solid fa-flag"></i>
