@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="Logo" src="https://raw.githubusercontent.com/felipevogtf/Buscaminas/main/src/assets/icons/bomb.svg" width="100" />
+  <img alt="Logo" src="https://raw.githubusercontent.com/felipevogtf/Buscaminas/master/src/assets/icons/bomb.svg" width="100" />
 </div>
 <h1 align="center">
   Buscaminas
@@ -13,7 +13,7 @@ El proyecto se realizo con <a href="https://github.com/angular/angular-cli">Angu
 
 </br>
 
-<a href="https://felipevogtf.github.io/Buscaminas/">![demo](https://raw.githubusercontent.com/felipevogtf/Buscaminas/main/src/assets/demo.png)</a>
+<a href="https://felipevogtf.github.io/Buscaminas/">![demo](https://raw.githubusercontent.com/felipevogtf/Buscaminas/master/src/assets/demo.png)</a>
 
 ## Development server
 
