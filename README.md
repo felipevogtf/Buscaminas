@@ -1,7 +1,19 @@
-# Buscaminas
-[DEMO](https://felipevogtf.github.io/buscaminas/)
+<div align="center">
+  <img alt="Logo" src="https://raw.githubusercontent.com/felipevogtf/Buscaminas/main/src/assets/icons/bomb.svg" width="100" />
+</div>
+<h1 align="center">
+  Buscaminas
+</h1>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.1.
+<div align="center">
+Aplicación web inspirada en el popular juego Buscaminas, cuyo objetivo es despejar el campo de minas sin detonar ninguna de ellas.
+</br>
+El proyecto se realizo con <a href="https://github.com/angular/angular-cli">Angular CLI</a> version 15.1.1.
+</div>
+
+</br>
+
+<a href="https://felipevogtf.github.io/Buscaminas/">![demo](https://raw.githubusercontent.com/felipevogtf/Buscaminas/main/src/assets/demo.png)</a>
 
 ## Development server
 
