@@ -7,6 +7,7 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
 import { MatDialog } from '@angular/material/dialog';
 import { NivelTipo } from 'src/models/nivel/nivel-tipo.model';
 import { Nivel } from 'src/models/nivel/nivel.model';
+import { QueryParamsService } from 'src/app/services/query-params.service';
 
 @Component({
   selector: 'app-tablero',
@@ -57,15 +58,29 @@ export class TableroComponent implements OnInit {
     },
   ];
 
-  constructor(private dialog: MatDialog) {
+  constructor(
+    private dialog: MatDialog,
+    private queryParamsService: QueryParamsService,
+  ) {
     this.nivelSeleccionado = NivelTipo.Facil;
 
-    this.crearTablero();
-    this.iniciarSFX();
+
+    if (typeof window !== 'undefined' && typeof Audio !== 'undefined') {
+      this.iniciarSFX();
+    }
   }
 
   ngOnInit() {
+    this.queryParamsService.getQueryParams('difficulty').subscribe((param) => {
+      try {
+        this.nivelSeleccionado = parseInt(param) as NivelTipo;
+      } catch (err) {
+        this.nivelSeleccionado = NivelTipo.Facil;
+      }
+    });
+    this.crearTablero();
     this.observarEstadoTablero();
+    
   }
 
   /**
@@ -78,7 +93,7 @@ export class TableroComponent implements OnInit {
       nivel.filas,
       nivel.columnas,
       nivel.minas,
-      nivel.banderas
+      nivel.banderas,
     );
 
     this.tableroEstado = EstadoTablero.Progreso;
@@ -94,12 +109,12 @@ export class TableroComponent implements OnInit {
     let nivelIndex: number = 0;
 
     let existeNivel: boolean = this.niveles.some(
-      (nivel) => nivel.dificultad == this.nivelSeleccionado
+      (nivel) => nivel.dificultad == this.nivelSeleccionado,
     );
 
     if (existeNivel) {
       nivelIndex = this.niveles.findIndex(
-        (nivel) => nivel.dificultad == this.nivelSeleccionado
+        (nivel) => nivel.dificultad == this.nivelSeleccionado,
       );
     }
 
@@ -136,11 +151,11 @@ export class TableroComponent implements OnInit {
     this.winSFX.src = 'assets/sfx/win.mp3';
     this.winSFX.load();
 
-    this.backgroundSFX = new Audio();
-    this.backgroundSFX.src = 'assets/sfx/back-loop.mp3';
-    this.backgroundSFX.load();
-    this.backgroundSFX.volume = 0.15;
-    this.backgroundSFX.loop = true;
+    // this.backgroundSFX = new Audio();
+    // this.backgroundSFX.src = 'assets/sfx/back-loop.mp3';
+    // this.backgroundSFX.load();
+    // this.backgroundSFX.volume = 0.15;
+    // this.backgroundSFX.loop = true;
 
     this.clickSFX = new Audio();
     this.clickSFX.src = 'assets/sfx/click.mp3';
@@ -189,7 +204,7 @@ export class TableroComponent implements OnInit {
   marcarCelda(celda: Celda): void {
     if (!this.partidaFinalizada) {
       this.clickSound();
-      
+
       if (celda.estado === EstadoCelda.Oculta) {
         this.tablero.marcarCelda(celda);
       } else if (celda.estado === EstadoCelda.Marcada) {
@@ -266,7 +281,7 @@ export class TableroComponent implements OnInit {
 
   /**
    * Obtiene la clase para el estado de la partida
-   * @returns 
+   * @returns
    */
   obtenerEstadoPartida(): string {
     let estado = '';
@@ -322,6 +337,7 @@ export class TableroComponent implements OnInit {
       .subscribe((data: NivelTipo) => {
         if (Object.values(NivelTipo).includes(data)) {
           this.nivelSeleccionado = data;
+          this.queryParamsService.setQueryParam('difficulty', data.toString());
           this.reiniciar();
         }
       });
@@ -344,6 +360,9 @@ export class TableroComponent implements OnInit {
    * Reproducir sonido
    */
   backgroundSound() {
+    if (!this.backgroundSFX) {
+      return;
+    }
     if (!this.audioMuted) {
       this.backgroundSFX.play();
     }
